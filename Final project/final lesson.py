@@ -8,19 +8,22 @@ def game_core_v3(number: int = 1) -> int:
     Returns:
         int: Число попыток
     """
-    count = 0
-    predict = np.random.randint(1, 101) # предполагаемое число
-
-    while number != predict:
+    count = 0  
+    a = list(range(1, 101)) # создание списка
+        
+    # индексы первого элемента, последнего и среднего
+    low = 0
+    high = len(a) - 1
+    mid = len(a) // 2
+    
+    while a[mid] != number:
         count += 1
-        if number < predict:
-            predict = predict//2
+        if number > a[mid]:
+            low = mid + 1
         else:
-            predict += 1
-        if number > predict:
-            predict += 1    
+            high = mid - 1
+        mid = (low + high) // 2
     return count
-
 
 def score_game(game_core_v3) -> int:
     """За какое количство попыток в среднем за 1000 подходов угадывает наш алгоритм
@@ -43,4 +46,4 @@ def score_game(game_core_v3) -> int:
     return score
     
 print('Run benchmarking for game_core_v3: ', end='')
-score_game(game_core_v3)
+score_game(game_core_v3)    
